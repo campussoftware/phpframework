@@ -1,0 +1,8 @@
+{
+    "name": "ramesh/phpframework",
+    "autoload": {
+        "psr-0" : {
+            "Ramesh\\Phpframework" : "/"
+        }
+    }
+}
