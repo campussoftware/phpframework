@@ -1,1 +1,0 @@
-{"id":"bigint(11)","type":"varchar(255)","type_id":"varchar(255)","expdate":"date","code":"varchar(255)","status":"varchar(255)","createdby":"bigint(11)","createdat":"datetime","updatedby":"bigint(11)","updatedat":"datetime"}

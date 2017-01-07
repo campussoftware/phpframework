@@ -1,1 +1,0 @@
-{"id":"int(11)","node_id":"varchar(255)","name":"varchar(255)","core_output_type_id":"varchar(255)","db_output_type_id":"varchar(255)","qry":"longtext","show_dashboard":"tinyint(1)","is_custom":"tinyint(1)","is_publish":"tinyint(1)","sortvalue":"int(11)","createdby":"int(11)","createdat":"datetime","updatedby":"int(11)","updatedat":"datetime"}

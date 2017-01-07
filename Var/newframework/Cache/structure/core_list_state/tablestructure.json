@@ -1,1 +1,0 @@
-{"id":"bigint(11)","core_country_id":"varchar(50)","name":"varchar(255)","code":"bigint(20)","active_status":"tinyint(1)","createdby":"bigint(11)","createdat":"datetime","updatedby":"bigint(11)","updatedat":"datetime"}

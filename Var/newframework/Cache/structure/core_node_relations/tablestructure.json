@@ -1,1 +1,0 @@
-{"id":"int(11)","core_node_settings_id":"varchar(255)","core_node_colname":"varchar(255)","core_relation_type_id":"varchar(255)","core_node_parent":"varchar(255)","dependee_fields":"longtext","sort_value":"int(11)","createdat":"datetime","updatedat":"datetime"}

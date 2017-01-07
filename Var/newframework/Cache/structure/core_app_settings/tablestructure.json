@@ -1,1 +1,0 @@
-{"id":"int(11)","core_user_id":"int(11)","app_key":"varchar(255)","app_password":"varchar(255)","active_status":"tinyint(1)","createdby":"int(11)","createdat":"datetime","updatedby":"int(11)","updatedat":"datetime"}

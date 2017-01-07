@@ -1,1 +1,0 @@
-{"id":"int(11)","host_securetype":"varchar(255)","host_port":"int(11)","host_name":"varchar(255)","host_username":"varchar(255)","host_password":"varchar(255)","fromemail":"varchar(255)","fromname":"varchar(255)","active_status":"tinyint(1)","createdby":"int(11)","createdat":"datetime","updatedby":"int(11)","updatedat":"datetime"}

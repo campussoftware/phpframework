@@ -1,1 +1,0 @@
-{"id":"bigint(20)","name":"varchar(255)","short_code":"varchar(255)","is_menu":"tinyint(2)","is_link":"tinyint(2)","main_image":"varchar(255)","small_image":"varchar(255)","is_active":"tinyint(2)","parent":"int(11)","parent_level":"int(11)","path":"varchar(255)","sort_oder":"bigint(20)","createdby":"int(11)","createdat":"datetime","updatedby":"int(11)","updatedat":"datetime"}

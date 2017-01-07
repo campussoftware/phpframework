@@ -1,1 +1,0 @@
-{"id":"int(11)","mobile_no":"varchar(255)","smstrackerid":"varchar(255)","sms_status":"varchar(255)","senderid":"varchar(255)","date":"date","text":"longtext","createdby":"int(11)","createdat":"datetime","updatedby":"int(11)","updatedat":"datetime"}

@@ -1,1 +1,0 @@
-{"id":"int(11)","core_user_id":"bigint(20)","name":"varchar(255)","datetime":"datetime","status":"varchar(255)","host":"varchar(255)","sesssionid":"varchar(255)","createdby":"int(11)","createdat":"datetime","updatedby":"int(11)","updatedat":"datetime"}
