@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ramesh>
+    <status>active</status>
+    <filename>ramesh</filename>
+    <name>ramesh</name>
+    <displayname>Ramesh</displayname>
+    <rootmodule>true</rootmodule>
+    <codemodule>false</codemodule>
+    <moduledisplay>true</moduledisplay>
+    <sort_value>1</sort_value>
+    <setuppath>\Modules\Ramesh\Setup</setuppath>
+    <datapath>\Modules\Ramesh\Data</datapath>    
+    <schemaversion>1.0.0</schemaversion>
+    <dataversion>1.0.0</dataversion>
+</ramesh>

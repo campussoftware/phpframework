@@ -1,0 +1,1 @@
+{"id":"bigint(11)","name":"varchar(255)","code":"varchar(50)","active_status":"tinyint(1)","createdby":"bigint(11)","createdat":"datetime","updatedby":"bigint(11)","updatedat":"datetime"}

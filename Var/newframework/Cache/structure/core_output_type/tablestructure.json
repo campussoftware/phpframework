@@ -1,0 +1,1 @@
+{"id":"int(11)","name":"varchar(255)","short_code":"varchar(255)","is_chart":"tinyint(1)","is_export":"tinyint(1)","active_status":"tinyint(1)","createdby":"int(11)","createdat":"datetime","updatedby":"int(11)","updatedat":"datetime"}

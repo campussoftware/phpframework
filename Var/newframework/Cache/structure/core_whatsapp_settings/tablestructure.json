@@ -1,0 +1,1 @@
+{"id":"int(11)","username":"varchar(255)","password":"varchar(255)","nickname":"varchar(255)","identity":"varchar(255)","active_status":"tinyint(1)","createdby":"int(11)","createdat":"datetime","updatedby":"int(11)","updatedat":"datetime"}

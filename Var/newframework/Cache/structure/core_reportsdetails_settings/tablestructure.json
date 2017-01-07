@@ -1,0 +1,1 @@
+{"id":"int(11)","core_reportsdetails_id":"varchar(255)","node_id":"varchar(255)","core_queryclause_id":"varchar(255)","core_orderclausetype_id":"varchar(255)","core_aggregate_function_id":"varchar(255)","fieldsdata":"varchar(255)","displayname":"varchar(255)","sortno":"int(11)","createdby":"int(11)","createdat":"datetime","updatedby":"int(11)","updatedat":"datetime"}

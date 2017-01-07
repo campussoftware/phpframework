@@ -1,0 +1,1 @@
+{"id":"int(11)","core_node_settings_id":"varchar(255)","core_element_displaytype_id":"varchar(255)","name":"varchar(255)","code":"varchar(255)","parent":"varchar(255)","parent_level":"int(11)","sortorder":"int(11)","createdat":"datetime","updatedat":"datetime"}

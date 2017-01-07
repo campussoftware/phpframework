@@ -1,0 +1,1 @@
+{"id":"int(11)","core_registernode_id":"varchar(255)","core_node_actions_id":"varchar(255)","template":"longtext","defaultnos":"longtext","colname":"varchar(255)","active_status":"tinyint(1)","createdby":"int(11)","createdat":"datetime","updatedby":"int(11)","updatedat":"datetime"}

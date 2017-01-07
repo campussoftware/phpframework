@@ -1,0 +1,1 @@
+{"id":"int(11)","core_node_attribute_option_id":"varchar(255)","short_code":"varchar(255)","value":"varchar(255)","is_default":"tinyint(1)","createdby":"int(11)","createdat":"datetime","updatedby":"int(11)","updatedat":"datetime"}
