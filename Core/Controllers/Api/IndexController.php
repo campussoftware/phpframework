@@ -1,7 +1,7 @@
 <?php
 namespace Core\Controllers\Api;
 use \Core\Controllers\NodeController;
-class IndexController extends Core_Controllers_NodeController
+class IndexController extends NodeController
 {
     //put your code here
     

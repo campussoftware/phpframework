@@ -26,7 +26,7 @@ class NodeDelete extends Settings
         $_NodeProperties=$this->_NodeProperties;        
         try
         {
-            $db=new Core_DataBase_ProcessQuery();          
+            $db=new \Core\DataBase\ProcessQuery();          
             $db->setTable($this->_tableName);
             $db->addWhere($_NodeProperties['primkey']."='".$this->_pkValue."'");
             $db->buildSelect();
@@ -41,18 +41,18 @@ class NodeDelete extends Settings
             $node->setData("rowdata", json_encode($record));            
             $node->save();
             $datetime=  date('Y-m-d H:i:s');
-            $session=new Core_Session();
+            $session=new \Core\Session();
             $session->setProcessActive();
             $session=$session->getSessionMaganager();    
             $host_ip=$session['ipaddress'];
-            $ns=new Core_DataBase_ProcessQuery();
+            $ns=new \Core\DataBase\ProcessQuery();
             $ns->setTable("core_node_history");
             $ns->addFieldArray(array("node_id"=>$this->_nodeName,"table_name"=>$this->_tableName,"pk_value"=>$this->_pkValue,"core_node_actions_id"=>"delete","datetime"=>$datetime,"core_user_id"=>$core_user_id,"host_ip"=>$host_ip));
             $ns->buildInsert();
             $ns->executeQuery();
             
             
-            $db=new Core_DataBase_ProcessQuery();          
+            $db=new \Core\DataBase\ProcessQuery();          
             $db->setTable($this->_tableName);
             $db->addWhere($this->_whereCon);
             $db->buildDelete();            

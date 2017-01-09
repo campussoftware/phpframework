@@ -349,14 +349,14 @@ class NodeController extends Render
     public function checkDetleteData()
     {
         return true;
-        $np=new Core_Model_NodeProperties();
+        $np=new \Core\Model\NodeProperties();
         $np->setNode($this->_nodeName);
         $childrelations=$np->getChildRelations();
         if(\Core::countArray($childrelations)>0)
         {
             foreach($childrelations as $node=>$colNameArray)
             {
-                $np=new Core_Model_NodeProperties();
+                $np=new \Core\Model\NodeProperties();
                 $np->setNode($node);
                 $nodeStructure=$np->currentNodeStructure();
                 $nodetablename=$nodeStructure['tablename'];
@@ -399,7 +399,7 @@ class NodeController extends Render
                 $deleteCheck=$this->checkDetleteData();
                 if($deleteCheck)
                 {   
-                    $nodeDelete=new Core_Model_NodeDelete();
+                    $nodeDelete=new \Core\Model\NodeDelete();
                     $nodeDelete->setNode($this->_nodeName);
                     $nodeDelete->setPkValue($this->_currentSelector);
                     $nodeDelete->addFilterCondition("(".$this->_tableName.".".$this->_primaryKey." = '".$this->_currentSelector."'".")");           
@@ -548,7 +548,7 @@ class NodeController extends Render
                 $db->addField($this->_nodeName.".".$this->_primaryKey." as pid");            
                 if(\Core::keyInArray($this->_descriptor, $nodeRelations))
                 {                
-                    $np=new Core_Model_NodeProperties();
+                    $np=new \Core\Model\NodeProperties();
                     $np->setNode($nodeRelations[$this->_descriptor]);
                     $parentNodeStructure=$np->currentNodeStructure();
                     $db->addFieldArray(array($nodeRelations[$this->_descriptor].".".$parentNodeStructure['descriptor']=>"pds"));
@@ -948,7 +948,8 @@ class NodeController extends Render
 				{
 					copy($filepath,$thumbfile);
 				}
-                                $filepath=$thumbfile;          
+                                $filepath=$thumbfile;  
+								$imagesettings=[];
                                 $db=new \Core\DataBase\ProcessQuery();
                                 $db->setTable("core_cms_image_settings");                                
                                 $db->addFieldArray(array("core_cms_image_settings.name"=>"tempname"));
@@ -961,7 +962,7 @@ class NodeController extends Render
                                 {
                                     foreach($filesettings as $fs)
                                     {
-                                            $imagesettings[$fs['tempname']]=$fs;
+										$imagesettings[$fs['tempname']]=$fs;
                                     }
                                 }
                                 
@@ -992,15 +993,11 @@ class NodeController extends Render
                             {
                                 if($this->_currentAction=='edit')
                                 {
-                                    if($requestedData['check_'.$key]==1)
+                                    if(\Core::getValueFromArray($requestedData,'check_'.$key)!=1)
                                     {
-
-                                    }
-                                    else   
-                                    {
-                                        $fileName=$existingResult[$key];
+										$fileName=$existingResult[$key];
                                         $data[$key]=$fileName;
-                                    }  
+                                    }                                     
                                 }
                             }
                     }  
@@ -1073,7 +1070,7 @@ class NodeController extends Render
                 {          
                     if(count($processkeys)>0)
                     {
-                        $np=new Core_Model_NodeProperties();
+                        $np=new \Core\Model\NodeProperties();
                         $np->setNode($node);
                         $currentNodeStructure=$np->currentNodeStructure();
                         $tableName=$currentNodeStructure['tablename'];
