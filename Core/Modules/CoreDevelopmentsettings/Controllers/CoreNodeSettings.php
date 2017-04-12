@@ -55,7 +55,7 @@ class CoreNodeSettings extends NodeController {
 
     public function getPrimaryKeyAction() {
         try {
-            $tbmodel = new Core_Model_TableStructure();
+            $tbmodel = new \Core\Model\TableStructure();
             $tbmodel->setTable($this->_requestedData['tablename']);
             $tableStructure = $tbmodel->getStructure();
             if (count($tableStructure) > 0) {
@@ -83,7 +83,7 @@ class CoreNodeSettings extends NodeController {
 
     public function getAutokeyAction() {
         try {
-            $tbmodel = new Core_Model_TableStructure();
+            $tbmodel = new \Core\Model\TableStructure();
             $tbmodel->setTable($this->_requestedData['tablename']);
             $tableStructure = $tbmodel->getStructure();
             if (count($tableStructure) > 0) {
@@ -135,25 +135,28 @@ class CoreNodeSettings extends NodeController {
             }
         }
         $attributeType = "checkbox";
-        $attributeDetails = new Core_Attributes_LoadAttribute($attributeType);
-        $attributeClass = Core_Attributes_ . $attributeDetails->_attributeName;
+        $attributeDetails = new \Core\Attributes\LoadAttribute($attributeType);
+        $attributeClass = "\Core\Attributes\\". $attributeDetails->_attributeName;
         $attribute = new $attributeClass;
         $attribute->setIdName($idName);
         $attribute->setOptions($fieldsArray);
         $attribute->setValue($defaultValue);
 
         $attribute->setAction($this->_requestedData['action']);
+        $FieldName="";
         if (in_array($FieldName, $mandotatoryAttributes)) {
             $attribute->setRequired();
+            $FieldName = \Core::getValueFromArray($mandotatoryAttributes, $FieldName);
         }
         if (in_array($FieldName, $readonlyAttributes) || $rquestedData['action'] == 'view') {
             $attribute->setReadonly();
+            $FieldName = \Core::getValueFromArray($readonlyAttributes, $FieldName);
         }
         $attribute->loadAttributeTemplate($attributeType, $FieldName);
     }
 
     public function coreNodeSettingsAfterDataUpdate() {
-        $cache = new Core_Cache_Refresh();
+        $cache = new \Core\Cache\Refresh();
         $cache->setNodeName($this->_requestedData['core_registernode_id']);
         $cache->nodeStructure();
         $cache->profilePrivileges();
@@ -170,14 +173,14 @@ class CoreNodeSettings extends NodeController {
             $db->setTable("core_reportsdetails");
             $db->addWhere("core_reportsdetails.id='" . $this->_requestedData['core_reportsdetails_id'] . "'");
             $report = $db->getRow();
-            $db = new Core_DataBase_ProcessQuery();
+            $db = new \Core\DataBase\ProcessQuery();
             $db->setTable("core_registernode");
             $db->addField("displayvalue");
             $db->addWhere("core_registernode.nodename='" . $report['node_id'] . "'");
 
             $nodeDisplay = $db->getValue();
             $finalResult[] = array("pid" => $report['node_id'], "pds" => $nodeDisplay);
-            $db = new Core_DataBase_ProcessQuery();
+            $db = new \Core\DataBase\ProcessQuery();
             $db->setTable("core_node_relations", "nrl");
             $db->addFieldArray(array("rnd.nodename" => "pid", "rnd.displayvalue" => "pds"));
             $db->addJoin("node_id", "core_registernode", "rnd", "nrl.core_node_parent=rnd.nodename");
@@ -191,8 +194,8 @@ class CoreNodeSettings extends NodeController {
             }
         }
         $attributeType = "select";
-        $attributeDetails = new Core_Attributes_LoadAttribute($attributeType);
-        $attributeClass = Core_Attributes_ . $attributeDetails->_attributeName;
+        $attributeDetails = new \Core\Attributes\LoadAttribute($attributeType);
+        $attributeClass = "\Core\Attributes\\" . $attributeDetails->_attributeName;
         $attribute = new $attributeClass;
         $attribute->setIdName('node_id');
         $attribute->setOptions($finalResult);

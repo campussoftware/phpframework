@@ -17,7 +17,8 @@ class CoreListLocation
     //put your code here
     function execute()
     {
-        $cc = new \CoreClass();         $setup=$cc->getObject("\Core\DataBase\Setup");  
+        $cc = new \CoreClass();         
+        $setup=$cc->getObject("\Core\DataBase\Setup");  
         $setup->setTable("core_list_location");
         if(!$setup->tableExists($setup->getTable()))
         {
@@ -30,6 +31,27 @@ class CoreListLocation
                 "type"=>"bigint",
                 "size"=>"11",
                 "auto_increment"=>1,           
+            ));
+            $setup->addColumnName(array(
+                "name"=>"core_country_id",
+                "displayValue"=>"Country Id",            
+                "default"=>NULL,                
+                "type"=>"varchar",
+                "size"=>"255"          
+            ));
+            $setup->addColumnName(array(
+                "name"=>"core_list_state_id",
+                "displayValue"=>"State Id",            
+                "default"=>NULL,                
+                "type"=>"varchar",
+                "size"=>"255"          
+            ));
+            $setup->addColumnName(array(
+                "name"=>"core_list_city_id",
+                "displayValue"=>"City Id",            
+                "default"=>NULL,                
+                "type"=>"varchar",
+                "size"=>"255"          
             ));
             $setup->addColumnName(array(
                 "name"=>"name",

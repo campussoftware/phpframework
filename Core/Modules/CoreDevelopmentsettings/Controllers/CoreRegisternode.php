@@ -43,7 +43,7 @@ class CoreRegisternode extends NodeController {
         return $this->_nodeName . ".is_module='1'";
     }
 
-    public function coreNodeSettingsCoreRegisternodeIdFilter($param) {
+    public function coreNodeSettingsCoreRegisternodeIdFilter() {
         return $this->_nodeName . ".is_module!='1'";
     }
 

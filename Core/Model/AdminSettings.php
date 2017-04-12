@@ -114,7 +114,8 @@ class AdminSettings
                     {
                         $this->_parentAction=$this->_requestedData['parentformAction'];
                     }
-		$np = new \Core\Model\NodeProperties();
+                $cc = new \CoreClass();
+                $np=$cc->getObject("\Core\Model\NodeProperties");
 		$np->setNode($this->_currentNode);
 		$this->_nodeDetails=$np->getNodeDetails();
                 }
@@ -131,32 +132,35 @@ class AdminSettings
                         {
                             $targetpath=$collectionData['target_path'];
                             $list=explode("/",$targetpath);
-                            $this->_currentNode=$list['0'];
-                            $this->_currentAction=$list['1'];
-                            $this->_currentSelector=$list['2'];
-                            $this->_parentNode=$list['3'];
-                            $this->_parentAction=$list['4'];
-                            $this->_parentValue=$list['5'];
+                            $this->_currentNode=\Core::getValueFromArray($list, 0);
+                            $this->_currentAction=\Core::getValueFromArray($list, 1);
+                            $this->_currentSelector=\Core::getValueFromArray($list, 2);
+                            $this->_parentNode=\Core::getValueFromArray($list, 3);
+                            $this->_parentAction=\Core::getValueFromArray($list, 4);
+                            $this->_parentValue=\Core::getValueFromArray($list, 5);
                             $this->_metaUrlInfo=\Core::convertJsonToArray($collectionData['metadata']);
                         }
-			$np = new Core_Model_NodeProperties();
+			$cc = new \CoreClass();
+                        $np=$cc->getObject("\Core\Model\NodeProperties");
 			$np->setNode($this->_currentNode);
 			$this->_nodeDetails=$np->getNodeDetails();
                     }
                     else
                     {
-                        $this->_currentNode=$list['0'];
-                        $this->_currentAction=$list['1'];
-                        $this->_currentSelector=$list['2'];
-                        $this->_parentNode=$list['3'];
-                        $this->_parentAction=$list['4'];
-                        $this->_parentValue=$list['5'];   
-			$np = new Core_Model_NodeProperties();
+                        $this->_currentNode=\Core::getValueFromArray($list, 0);
+                        $this->_currentAction=\Core::getValueFromArray($list, 1);
+                        $this->_currentSelector=\Core::getValueFromArray($list, 2);
+                        $this->_parentNode=\Core::getValueFromArray($list, 3);
+                        $this->_parentAction=\Core::getValueFromArray($list, 4);
+                        $this->_parentValue=\Core::getValueFromArray($list,5);   
+			$cc = new \CoreClass();
+                        $np=$cc->getObject("\Core\Model\NodeProperties");
 			$np->setRouterName($this->_currentNode);				
 			$this->_nodeDetails=$np->getNodeDetailsBasedonRouter();						
 			if(\Core::countArray($this->_nodeDetails)==0)
 			{
-				$np = new Core_Model_NodeProperties();
+				$cc = new \CoreClass();
+                                $np=$cc->getObject("\Core\Model\NodeProperties");
 				$np->setNode($this->_currentNode);
 				$this->_nodeDetails=$np->getNodeDetails();
 			} 
@@ -170,4 +174,3 @@ class AdminSettings
 			}
         }                
     }
-?>

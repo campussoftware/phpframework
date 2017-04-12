@@ -24,7 +24,7 @@ class CoreReportsengine extends NodeController
     public $_showAttributes;
     public $_totalRecordsCount;
     public $_reportDisplayName;
-    public function adminAction($param) 
+    public function adminAction($param=NULL) 
     {
         $this->getReportDetails();
         $this->loadLayout("reportengine.phtml");
@@ -32,7 +32,7 @@ class CoreReportsengine extends NodeController
     public function getReportDetails()
     {
         $this->_reportDetails=array();
-        $db=new Core_DataBase_ProcessQuery();
+        $db=new \Core\DataBase\ProcessQuery();
         $db->setTable("core_reportsdetails","rd");
         $db->addFieldArray(array("rrnd.displayvalue"=>"root","mrnd.displayvalue"=>"md","rd.name"=>"name","rd.id"=>"id"));
         $joincondition="rnd.nodename=rd.node_id";
@@ -59,14 +59,14 @@ class CoreReportsengine extends NodeController
     }
     function getReportDetailsAction()
     {        
-        $db=new Core_DataBase_ProcessQuery();
+        $db=new \Core\DataBase\ProcessQuery();
         $db->setTable("core_reportsdetails");
         $db->addWhere("core_reportsdetails.id='".$this->_requestedData['reportname']."'");
         $db->buildSelect();
         $result=$db->getRow();
         $this->_reportDisplayName=$result['name'];
         $nodeName=$result['node_id'];
-        $node=new Core_Model_Node();
+        $node=new \Core\Model\Node();
         $node->setNodeName($nodeName);
         $node->setActionName("admin");
         $node->setShowAttributes();
@@ -77,7 +77,7 @@ class CoreReportsengine extends NodeController
         {
             $queryfile=\Core::getCachefilePathReports($nodeName,$this->_requestedData['reportname'],"S");
             $query=\Core::getFileContent($queryfile);
-            $db=new Core_DataBase_ProcessQuery();
+            $db=new \Core\DataBase\ProcessQuery();
             $db->setCustomQuery($query);
             $this->_reportResult=$db->getRows();
             
@@ -123,14 +123,14 @@ class CoreReportsengine extends NodeController
         $requestedData=$this->_requestedData;
         $output_type=$requestedData['output_type'];
         
-        $db=new Core_DataBase_ProcessQuery();
+        $db=new \Core\DataBase\ProcessQuery();
         $db->setTable("core_reportsdetails");
         $db->addWhere("core_reportsdetails.id='".$this->_requestedData['reportname']."'");
         $db->buildSelect();
         $result=$db->getRow();
         $this->_reportDisplayName=$result['name'];
         $nodeName=$result['node_id'];
-        $node=new Core_Model_Node();
+        $node=new \Core\Model\Node();
         $node->setNodeName($nodeName);
         $node->setActionName("admin");
         $node->setShowAttributes();
@@ -141,7 +141,7 @@ class CoreReportsengine extends NodeController
         {
             $queryfile=\Core::getCachefilePathReports($nodeName,$this->_requestedData['reportname'],"S");
             $query=\Core::getFileContent($queryfile);
-            $db=new Core_DataBase_ProcessQuery();
+            $db=new \Core\DataBase\ProcessQuery();
             $db->setCustomQuery($query);
             $this->_reportResult=$db->getRows();
             

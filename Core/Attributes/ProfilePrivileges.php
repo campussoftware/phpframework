@@ -12,12 +12,12 @@ namespace Core\Attributes;
         public function __construct() 
         {
             global $currentProfileCode;
-            $np=new Core_Model_NodeProperties();
+            $np=new \Core\Model\NodeProperties();
             $this->_accessbleNode=$np->getCurrentProfilePermission($currentProfileCode);            
         }       
         public function buildMenu()
         {
-            $wp=new Core_WebsiteSettings();
+            $wp=new \Core\WebsiteSettings();
             if(count($this->_accessbleNode)>0)
             {
                 $k=0;                

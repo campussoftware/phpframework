@@ -15,11 +15,11 @@ class CoreAccess extends NodeController
     protected function setProfileAccess()
     {
         global $currentProfileCode;
-        $db=new Core_DataBase_ProcessQuery();
+        $db=new \Core\DataBase\ProcessQuery();
         $db->setTable($this->_tableName);
         $db->addWhere($this->_parentColName."='".$this->_parentSelector."'");
         $this->_existingRecord=$db->getRows("node");        
-        $this->_profileAccess=new Core_Attributes_ProfilePrivileges();
+        $this->_profileAccess=new \Core\Attributes\ProfilePrivileges();
         $this->_profileAccess->buildMenu();        
     }
     public function saveAction()
@@ -27,7 +27,7 @@ class CoreAccess extends NodeController
         try 
         {          
         
-            $db=new Core_DataBase_ProcessQuery();
+            $db=new \Core\DataBase\ProcessQuery();
             $db->setTable($this->_tableName);
             $db->addWhere($this->_parentColName."='".$this->_parentSelector."'");
             $db->buildDelete();
@@ -42,7 +42,7 @@ class CoreAccess extends NodeController
                     $db->executeQuery();
                 }
             }
-            $cache=new Core_Cache_Refresh();        
+            $cache=new \Core\Cache\Refresh();        
             $cache->profilePrivileges($this->_parentSelector);
         }
         catch (Exception $ex) 

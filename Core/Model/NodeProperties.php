@@ -224,7 +224,8 @@ class NodeProperties
     public function getNodeDetailsBasedonRouter()
     {
 	$nodeData=array();
-	$node=new Core_Model_Node();
+        $cc = new \CoreClass();
+        $node=$cc->getObject("\Core\Model\Node");
 	$node->setNodeName("core_registernode");
 	$node->addCustomFilter("nodefile='".$this->_routerName."'");
 	$node->addCustomFilter("is_module='0'");	

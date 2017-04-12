@@ -7,8 +7,11 @@ global $rootObj;
 $wp=$rootObj;
 $cssRootPath=$wp->websiteUrl."css/".$wp->themeName."/";
 $jsRootPath=$wp->websiteUrl."js/".$wp->themeName."/";
+$jspath=$wp->websiteUrl."Var/".$wp->identity."/design/adminhtml/".$wp->themeName."/js/";
 global $currentNode;
 global $currentAction;
+$csspath = $wp->websiteUrl . "Var/" . $wp->identity . "/design/adminhtml/".$wp->themeName."/css/";
+$jspath = $wp->websiteUrl . "Var/" . $wp->identity . "/design/adminhtml/".$wp->themeName."/js/";
 if($currentNode=='core_users' && $currentAction=='login')
 {  
 }
@@ -31,13 +34,13 @@ else
 <title><?php echo $currentNode?$lb->getLabel("header_project_name")."/".$lb->getLabel($currentNode):$lb->getLabel("header_project_name"); ?></title>
 <?php             
             $this->addDefaultCss();
-            $this->addContent("
-                    ");
+            $this->addContent("");
             $this->addDefaultJs();
             $this->renderLayout();
         ?>
 <link href="<?php echo $wp->websiteUrl; ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 <link href="<?php echo $wp->websiteUrl; ?>assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="<?php echo $wp->websiteUrl; ?>css/theam1/css/AdminLTE.min.css">
 <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
@@ -54,9 +57,15 @@ else
 <link rel="stylesheet" href="<?php echo $wp->websiteUrl; ?>css/theam1/plugins/daterangepicker/daterangepicker-bs3.css">
 <!-- bootstrap wysihtml5 - text editor -->
 <link rel="stylesheet" href="<?php echo $wp->websiteUrl; ?>css/theam1/css/styles.css">
-<script src="<?php echo $wp->websiteUrl; ?>js/theme/alertify.min.js"></script>
-<script type="text/javascript" src="<?php echo $wp->websiteUrl; ?>js/theme/jquery-1.8.2.min.js"></script>
+<link rel="stylesheet" href="<?php echo $wp->websiteUrl; ?>css/theam1/css/sidemenu.css">
 <link rel="stylesheet" href="<?php echo $wp->websiteUrl; ?>css/project/project.css">
+<link rel="stylesheet" href="<?php echo $cssRootPath; ?>styles.css">
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo $wp->websiteUrl; ?>assets/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- END JAVASCRIPTS -->   
+    <script data-main="<?php echo $jspath; ?>requirejs/config" src="<?php echo $jspath; ?>requirejs/require.js" ></script>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -183,7 +192,7 @@ input[type="checkbox"] {
 					$output1='
 					<li class="treeview">'; 
                      $output1.='<a href="javascript:;"><i class="'.$rootmoduledata['icon'].'"></i>'.'<span>'.$menuObject->_nodeDisplay[$root].'</span></a>';
-                     $output1.=' <ul class="treeview-menu" '.$style.' >';
+                     $output1.=' <ul class="sidebar-submenu" '.$style.' >';
                          foreach($rootdata as $moduledisplay=>$moduledata)
                          {                 
                              $style='';
@@ -197,7 +206,7 @@ input[type="checkbox"] {
                             $output1.='<li class="dropdown '.$openclass.'"   name="link_'.$root.'" id="link_'.$root."-".$moduledisplay.'" ><a href="javascript:;" ><div><span class="icon-box">
                             </span>'.Core::getValueFromArray($menuObject->_nodeDisplay, $moduledisplay).'</div></a>';
                             
-                            $output1.='<ul class="treeview-menu dropdown-menu" '.$style.' name="menu_'.$root.'" id="menu_'.$root.'-'.$moduledisplay.'">';
+                            $output1.='<ul class=" sidebar-submenu" '.$style.' name="menu_'.$root.'" id="menu_'.$root.'-'.$moduledisplay.'">';
                                  foreach($moduledata as $module=>$nodedata)
                                   {
                                     foreach($nodedata as $node=>$action)

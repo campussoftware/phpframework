@@ -110,7 +110,7 @@ class Refresh {
         $profileDetails = $qry->getRows();
         if (count($profileDetails) > 0) {
             foreach ($profileDetails as $pd) {
-                $qry = new Core_DataBase_ProcessQuery();
+                $qry = new \Core\DataBase\ProcessQuery();
                 $qry->setTable("core_registernode", "rnd");
                 $qry->addField("rnd.nodename
                                         ,rnd.icon

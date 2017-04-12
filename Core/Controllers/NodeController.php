@@ -101,7 +101,7 @@ class NodeController extends Render
             {
                 
                 $errorsArray=$this->nodeDataValidate("add",$this);
-                if(count($errorsArray)>0)
+                if(\Core::countArray($errorsArray)>0)
                 {   
                     $output['status']="error";
                     $output['errors']=$errorsArray;
@@ -118,7 +118,7 @@ class NodeController extends Render
                                 
                     foreach($this->_showAttributes as $FieldName)
                     {                
-                        $fieldNameValue=\Core::convertArrayToString($requestedData[$FieldName]);
+                        $fieldNameValue=\Core::convertArrayToString(\Core::getValueFromArray($requestedData,$FieldName));
                         $data[$FieldName]=$fieldNameValue;                        
                     } 
                     $data=$this->beforeDataUpdate($data);
@@ -538,9 +538,9 @@ class NodeController extends Render
                 $multiSelectedValues=array();
                 if(\Core::isArray($sourceNodeStructure))
                 {            
-                    $readonlyAttributes=\Core::convertStringToArray($sourceNodeStructure['readonly_'.$requestedData['action']]);   
-                    $mandotatoryAttributes=\Core::convertStringToArray($sourceNodeStructure['mandotatory_'.$requestedData['action']]);   
-                    $multiSelectedValues=\Core::convertStringToArray($sourceNodeStructure['multivalues']);   
+                    $readonlyAttributes=\Core::convertStringToArray(\Core::getValueFromArray($sourceNodeStructure,'readonly_'.$requestedData['action']));   
+                    $mandotatoryAttributes=\Core::convertStringToArray(\Core::getValueFromArray($sourceNodeStructure,'mandotatory_'.$requestedData['action']));   
+                    $multiSelectedValues=\Core::convertStringToArray(\Core::getValueFromArray($sourceNodeStructure,'multivalues'));   
                 }
 
                 $db=new \Core\DataBase\ProcessQuery();
@@ -622,8 +622,11 @@ class NodeController extends Render
                 {
                     $methodName=\CoreClass::getMethod($this,"filter",$sourceNode,$FieldName);
                     if($methodName) 
-                    { 
-                        $db->addWhere($this->$methodName());
+                    {
+                        if(\Core::methodExists($this,$methodName))
+                        {
+                            $db->addWhere($this->$methodName());
+                        }                        
                     }
                 }
                 $db->addOrderBy($this->_descriptor);
@@ -726,7 +729,7 @@ class NodeController extends Render
         $errorsArray=array();
         $requestedData=$nodeObject->_requestedData;
         $NodeFieldAttributes=$this->_NodeFieldAttributes;
-        $nodeResult=  json_decode($requestedData['noderesult'],true);     
+        $nodeResult=  json_decode(\Core::getValueFromArray($requestedData, "noderesult"),true);     
         $mandotatoryAttributes =$this->mandotatoryAttributes();
         $methodName=\Core::convertStringToMethod($this->_nodeName."_nodeDataValidateBefore");
         
@@ -791,7 +794,7 @@ class NodeController extends Render
         {
             foreach($this->_uniqueAttributes as $fieldName)
             {
-                if($requestedData[$fieldName]!="")
+                if(\Core::getValueFromArray($requestedData, "$fieldName")!="")
                 {
                     $db=new \Core\DataBase\ProcessQuery();            
                     $db->setTable($this->_tableName); 
@@ -856,7 +859,7 @@ class NodeController extends Render
         $filesettings_array=array();
         $file_types=array();
         $filePath=$this->_filePath;
-        $existingResult=\Core::convertJsonToArray($requestedData['noderesult']);
+        $existingResult=\Core::convertJsonToArray(\Core::getValueFromArray($requestedData, "noderesult"));
         if(\Core::keyInArray("parent_level",$this->_NodeFieldsList))
         {
             $parent_level=1;
@@ -1126,9 +1129,9 @@ class NodeController extends Render
             $node=\CoreClass::getController($this->_nodeName,$this->_currentNodeModule,"delete");     
             $node->setNodeName($this->_nodeName);
             $node->setActionName("delete");
-            $node->setParentNode($parentNode);
-            $node->setParentValue($parentValue);
-            $node->setParentAction($parentAction);
+            $node->setParentNode($this->_parentNode);
+            $node->setParentValue($this->_parentSelector);
+            $node->setParentAction($this->_parentAction);
             $node->setCurrentSelector($pid);
             $node->setMethodType("POST"); 
             $node->setMraActionPerform();

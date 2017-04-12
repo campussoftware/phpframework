@@ -17,15 +17,15 @@ class PageLayout extends Language {
     public $_currentNodeModule;
     public $_nodeName;
     public $_controllerObj;
+    public $_defaultAcdAttributes=array();
 
-    function __construct($controller=NULL) {
-        if(!is_object($controller))
-        {
-            $this->_controllerObj = new \Core\Controllers\NodeController(null,NULL);
-        }else
-        {
-        $this->_controllerObj = $controller;
+    function __construct($controller = NULL) {
+        if (!is_object($controller)) {
+            $this->_controllerObj = new \Core\Controllers\NodeController(null, NULL);
+        } else {
+            $this->_controllerObj = $controller;
         }
+        $this->_defaultAcdAttributes = $this->_controllerObj->_showAttributes;
     }
 
     public function setCurrentNodeName($nodeName) {
@@ -239,16 +239,26 @@ class PageLayout extends Language {
             $templateRootPath.="frontend/";
         }
 
-        $currentnode = is_object($this->_controllerObj)?$this->_controllerObj->_nodeName:"";
+        $currentnode = is_object($this->_controllerObj) ? $this->_controllerObj->_nodeName : "";
         $includepath = "";
         if ($currentnode) {
             $module = $this->_controllerObj->_currentNodeModule;
-            if ($module) {
-                $module = \Core::convertStringToFileName($module);
+            $module = \Core::convertStringToFileName($module);
+            if($actionRequestFrom=="admin"){
+                $targetFile = \Core::getTempAdminThemePath() . "template/" . $module . "/" . \Core::convertStringToFileName($currentnode) . "/" . $filename;
+            }else{
+                $targetFile = \Core::getTempFrontendThemePath() . "template/" . $module . "/" . \Core::convertStringToFileName($currentnode) . "/" . $filename;
+            }
+            if (\Core::fileExists($targetFile) && $flag == 0) {
+                $includepath = $targetFile;
+                $flag = 1;
+            }
+            if ($flag == 0 && $module) {
                 $filenamePath = $templateRootPath . $ws->themeName . "/template/" . $module . "/" . \Core::convertStringToFileName($currentnode) . "/" . $filename;
                 if (\Core::fileExists($filenamePath) && $flag == 0) {
                     $includepath = $filenamePath;
                     $flag = 1;
+                    
                 }
             }
             if ($flag == 0) {
@@ -258,16 +268,25 @@ class PageLayout extends Language {
                     $flag = 1;
                 }
             }
+            if ($flag == 0) {
+                $filenamePath = $templateRootPath . $ws->themeName . "/template/" . $filename;
+                if (\Core::fileExists($filenamePath)) {
+                    $includepath = $filenamePath;
+                    $flag = 1;
+                }
+            }
+            if ($flag == 1) {
+                \Core::copyFile($includepath, $targetFile);
+            }
         }
         if ($flag == 0) {
             $filenamePath = $templateRootPath . $ws->themeName . "/template/" . $filename;
             if (\Core::fileExists($filenamePath)) {
-                //echo '<div class="templatehits">'.$filenamePath."</div>";
+
                 $includepath = $filenamePath;
                 $flag = 1;
             }
-        }
-
+        }        
         if (\Core::fileExists($includepath)) {
             if ($returnFile == 1) {
                 return $includepath;

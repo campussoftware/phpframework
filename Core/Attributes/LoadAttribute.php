@@ -6,7 +6,7 @@ namespace Core\Attributes;
         
         function __construct($attributeType=NULL) 
         {
-            $className="Core_Attributes_".ucwords($attributeType)."Attribute";
+            $className="\Core\Attributes\\".ucwords($attributeType)."Attribute";
             $classResponse=class_exists($className, true);
             if($classResponse)
             {

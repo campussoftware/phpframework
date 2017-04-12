@@ -7,13 +7,25 @@ class IndexController extends Render
     
     public function indexAction()
     {
-        $this->getLayout();
-        $this->renderLayout();
+        $wp = new \Core\WebsiteSettings();
+        $session =  new \Core\Session();
+        $sessionData = $session->getFrontendSession();
+        $location = \Core::getValueFromArray($sessionData, "location");
+        if($location==""){
+            $this->getLayout();
+            $this->renderLayout();
+        }else{
+            \Core::redirectUrl($wp->websiteUrl."home.html","");
+        }
     }
     public function  returnJsonResponse($output)
     {
         ob_clean();
         header('Content-Type: application/json');
-        echo json_encode($output);      
+        echo json_encode($output);  
+    }
+    public function removeFrontendSessionValue() {
+        $session =  new \Core\Session();
+        $session->removeFrontendSessionValue("userId");
     }
 }

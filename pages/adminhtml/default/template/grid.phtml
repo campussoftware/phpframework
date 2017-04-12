@@ -1,5 +1,6 @@
 <?php
-$controllerObj=$this->_controllerObj;
+$controllerObj = $this->_controllerObj;
+//echo "<pre>"; print_r($controllerObj); die;
 $performAction = $controllerObj->checkActionPerform();
 $performMraAction = $controllerObj->checkMraActionPerform();
 $performMultiEditAction = $controllerObj->checkMultiEditActionInProgress();
@@ -9,20 +10,20 @@ if ($controllerObj->_totalRecordsCount < 1) {
 }
 ?>
 <div id="total_<?php echo $controllerObj->_nodeName; ?>" name="total_<?php echo $controllerObj->_nodeName; ?>">
-<?php
-if (!$performMultiEditAction) {
-    ?>
+    <?php
+    if (!$performMultiEditAction) {
+        ?>
         <div>
-        <?php
-        $parentPath = "";
-        if ($controllerObj->_parentNode) {
-            $parentPath.=$controllerObj->_parentNode . "/";
-            $parentPath.=$controllerObj->_parentAction . "/";
-            $parentPath.=$controllerObj->_parentSelector;
-        }
-        if (count($controllerObj->_singleActions) && $performAction == 1) {
-            foreach ($controllerObj->_singleActions as $actionName) {
-                ?>
+            <?php
+            $parentPath = "";
+            if ($controllerObj->_parentNode) {
+                $parentPath.=$controllerObj->_parentNode . "/";
+                $parentPath.=$controllerObj->_parentAction . "/";
+                $parentPath.=$controllerObj->_parentSelector;
+            }
+            if (count($controllerObj->_singleActions) && $performAction == 1) {
+                foreach ($controllerObj->_singleActions as $actionName) {
+                    ?>
                     <span style="padding-left: 25px;">
                         <a href="<?php echo $controllerObj->_websiteHostUrl . $actionName["code"] . "/0/" . $parentPath; ?>">
                             <button class="btn btn-warning"><?php echo $actionName['name']; ?></button>

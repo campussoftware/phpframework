@@ -47,6 +47,7 @@ class NodeDelete extends Settings
             $host_ip=$session['ipaddress'];
             $ns=new \Core\DataBase\ProcessQuery();
             $ns->setTable("core_node_history");
+            $core_user_id = 0;
             $ns->addFieldArray(array("node_id"=>$this->_nodeName,"table_name"=>$this->_tableName,"pk_value"=>$this->_pkValue,"core_node_actions_id"=>"delete","datetime"=>$datetime,"core_user_id"=>$core_user_id,"host_ip"=>$host_ip));
             $ns->buildInsert();
             $ns->executeQuery();

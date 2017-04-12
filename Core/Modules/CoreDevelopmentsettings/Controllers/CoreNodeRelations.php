@@ -25,10 +25,10 @@ class CoreNodeRelations extends NodeController
     
     public function coreNodeRelationsAfterDataUpdate()
     {        
-        $cache=new Core_Cache_Refresh();
+        $cache=new \Core\Cache\Refresh();
         $cache->setNodeName($this->_requestedData['core_node_settings_id']);
         $cache->setRelations();  
-        $cache=new Core_Cache_Refresh();
+        $cache=new \Core\Cache\Refresh();
         $cache->setNodeName($this->_requestedData['core_node_parent']);
         $cache->setChildRelations();
         return TRUE;  
@@ -37,11 +37,11 @@ class CoreNodeRelations extends NodeController
     {
         $requestedData=$this->_requestedData;
         $defaultValue=$requestedData['dependee_fields'];
-        $np=new Core_Model_NodeProperties();
+        $np=new \Core\Model\NodeProperties();
         $np->setNode($requestedData['core_node_settings_id']);
         $nodestructure=$np->currentNodeStructure();
         
-        $tb=new Core_Model_TableStructure();
+        $tb=new \Core\Model\TableStructure();
         $tb->setTable($nodestructure['tablename']);
         $tableStructure=$tb->getStructure();
         $tableStructure=\Core::getKeysFromArray($tableStructure);
@@ -56,9 +56,9 @@ class CoreNodeRelations extends NodeController
             $i++;
         }
         $attributeType="checkbox";        
-        $attributeDetails=new Core_Attributes_LoadAttribute($attributeType);				
-        $attributeClass=Core_Attributes_.$attributeDetails->_attributeName;
-        $attribute=new $attributeClass;
+        $attributeDetails=new \Core\Attributes\LoadAttribute($attributeType);				
+        $attributeClass = "\Core\Attributes\\".$attributeDetails->_attributeName;
+        $attribute= new $attributeClass;
         $attribute->setIdName($requestedData['idname']);
         $attribute->setOptions($result);
         $attribute->setValue($defaultValue);        

@@ -24,7 +24,7 @@ namespace Core\Model;
             if($nodeRelations)
             {
                 $nodeRelations=\Core::JsontoArray($nodeRelations);
-                $nodeRelations=$nodeRelations['MTO'];
+                $nodeRelations= \Core::getValueFromArray($nodeRelations, "MTO");
                 if(!\Core::isArray($nodeRelations))
                 {
                     $nodeRelations=array();

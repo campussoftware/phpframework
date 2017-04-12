@@ -19,7 +19,7 @@ class Data
     {
         try
         {
-            $db =new Core_DataBase_ProcessQuery();
+            $db =new \Core\DataBase\ProcessQuery();
             $db->setTable("core_settings_sequence");
             $db->addFieldArray(array("identity"=>"identity","prefix"=>"prefix","left_padding"=>"left_padding","current_sequence"=>"current_sequence"));
             $db->addWhere("identity='".$Identity."'");
@@ -42,7 +42,7 @@ class Data
     {
         try 
         {
-            $db =new Core_DataBase_DbConnect();
+            $db =new \Core\DataBase\DbConnect();
             $sql="update core_settings_sequence set current_sequence=current_sequence+1 where identity='".$Identity."' ";
             $db->executeQuery($sql);
         } 

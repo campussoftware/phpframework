@@ -25,7 +25,7 @@ class CoreNodeFiletypes extends NodeController
         $i=0;
         if($nodeName)
         {
-            $node= new Core_Model_Node();
+            $node= new \Core\Model\Node();
             $node->setNodeName($nodeName);
             if(\Core::countArray($node->_NodeFieldAttributes)>0)
             {
@@ -41,8 +41,8 @@ class CoreNodeFiletypes extends NodeController
             }
         }        
         $attributeType="select";        
-        $attributeDetails=new Core_Attributes_LoadAttribute($attributeType);				
-        $attributeClass="Core_Attributes_".$attributeDetails->_attributeName;
+        $attributeDetails=new \Core\Attributes\LoadAttribute($attributeType);				
+        $attributeClass="\Core\Attributes\\".$attributeDetails->_attributeName;
         $attribute=new $attributeClass;
         $attribute->setIdName($requestedData['idname']);
         $attribute->setOptions($result);
@@ -50,9 +50,10 @@ class CoreNodeFiletypes extends NodeController
         $attribute->loadAttributeTemplate($attributeType,$requestedData['idname']);
     }
     public function coreNodeFiletypesAfterDataUpdate()
-    {        
-        $nodeName=$requestedData['core_node_settings_id'];
-        $cache=new Core_Cache_Refresh();
+    {    
+        $requestedData=$this->_requestedData;
+        $nodeName= \Core::getValueFromArray($requestedData, 'core_node_settings_id');
+        $cache=new \Core\Cache\Refresh();
         $cache->setNodeName($nodeName);
         $cache->setFilePath();
         return true;

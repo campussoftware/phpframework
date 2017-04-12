@@ -75,7 +75,7 @@ $nodeOTMRelations = $np->NodeCheckForProfile($controllerObj->_nodeOTMRelations);
                                         <input type="hidden" id="node" name="node" value="<?php echo $controllerObj->_nodeName; ?>">
                                         <input type="hidden" id="action" name="action" value="<?php echo $controllerObj->_currentAction; ?>">
                                         <input type="hidden" id="action_id" name="action_id" value="<?php echo $controllerObj->_currentAction; ?>">                                          
-                                        <input type="hidden" id="id" name="id" value="<?php echo \Core::getValueFromArray($controllerObj->_record,'id'); ?>">
+                                        <input type="hidden" id="id" name="id" value="<?php echo \Core::getValueFromArray($controllerObj->_record, "id"); ?>">
                                         <div id="error_div" name="error_div" style="color: red;font-weight: bold;"></div> 
                                         <?php
                                             if(count($this->_tabList)>0)

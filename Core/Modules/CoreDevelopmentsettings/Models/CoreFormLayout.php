@@ -11,7 +11,9 @@
  *
  * @author ramesh
  */
-class Core_Modules_CoreDevelopmentsettings_Models_CoreFormLayout extends Core_Model_Node
+namespace Core\Modules\CoreDevelopmentsettings\Models;
+use Core\Model\Node;
+class CoreFormLayout extends Node
 {
     //put your code here
     public function coreFormLayoutOnchange()

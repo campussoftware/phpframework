@@ -1,13 +1,22 @@
 <?php
-if (isset($argv)) {
-    unset($argv[0]);
-    $cmd=new Core_Command();
-    $cmd->setInputParameters($argv);
+if (isset($argv)|| (\Core::keyInArray("type", $_REQUEST) && \Core::getValueFromArray($_REQUEST, "type"))) {
+    if(isset($argv))
+    {
+        $params=$argv;
+    }
+    else
+    {
+        $params=\Core::getValuesFromArray($_REQUEST);
+    }
+    unset($params[0]);
+    $cmd=new \Core\Command();
+    $cmd->setInputParameters($params);
     $cmd->execute();
 } else {
-    $wp = $rootObj;
+   
     $extension = substr(Core::getValueFromArray($_REQUEST,'reditectpath'), -3);
     if (Core::inArray($extension, array(".js", "css", "png", "jpg", "gif"))) {
+        header("HTTP/1.0 404 File Not Exists"); 
         exit;
     }    
     global $globalnode_settings_details;

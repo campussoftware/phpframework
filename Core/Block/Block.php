@@ -21,16 +21,14 @@ class Block extends PageLayout
     public $_parentBlock=NULL;
     public $_template;
     public $_websiteSettings=NULL;
-    public $_accordionList=array();
-    public $_defaultAcdAttributes=array();
+    public $_accordionList=array();    
     public $_accordionFields=array();
+    public $_partentObject;
    
-    function __construct($controller) 
+    function __construct($controller = NULL) 
     {
         global $rootObj;
-	$this->_websiteSettings=$rootObj;
-        $this->_controllerObj=$controller;
-        $this->_defaultAcdAttributes=$controller->_showAttributes;
+	$this->_websiteSettings=$rootObj; 
         parent::__construct($controller);
     }
     public function setLayout($layout)
@@ -56,6 +54,10 @@ class Block extends PageLayout
     public function execute()
     {        
         $this->loadLayout($this->_template.".phtml", 1);
+    }
+    public function setParentObject($_partentObject)
+    {
+        $this->_partentObject=$_partentObject;
     }
     public function loadChildBlock($blockName=NULL)
     {
@@ -84,6 +86,7 @@ class Block extends PageLayout
                         $block->setLayout($this->_layout);
                         $block->setBlockName($blockConfigData['name']);
                         $block->setParentBlock($this->_blockName);
+                        $block->setParentObject($this);
                         $block->setTemplate($blockConfigData['template']);                        
                         $block->execute();
                     }
@@ -99,5 +102,6 @@ class Block extends PageLayout
     {
         
     }
+    
     
 }

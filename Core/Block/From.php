@@ -71,7 +71,7 @@ class From extends Block
                 $acdname=$accordionData['@attributes']['name'];
                 if($defaultfields>0)
                 {
-                    $nodeModel=CoreClass::getModel("core_form_layout");
+                    $nodeModel=\CoreClass::getModel("core_form_layout");
                     $nodeModel->addCustomFieldToSelect("core_form_layout.id", "id");
                     $nodeModel->addCustomFieldToSelect("core_form_layout.filedname", "filedname");
                     $nodeModel->addCustomJoin("core_form_settings_id", "core_form_settings", "core_form_settings_id", "core_form_settings_id.id=core_form_layout.core_form_settings_id");
@@ -101,7 +101,7 @@ class From extends Block
                 $tabname=$tabData['@attributes']['name'];
                 if($defaultfields>0)
                 {
-                    $nodeModel=CoreClass::getModel("core_form_layout");
+                    $nodeModel=\CoreClass::getModel("core_form_layout");
                     $nodeModel->addCustomFieldToSelect("core_form_layout.id", "id");
                     $nodeModel->addCustomFieldToSelect("core_form_layout.filedname", "filedname");
                     $nodeModel->addCustomJoin("core_form_settings_id", "core_form_settings", "core_form_settings_id", "core_form_settings_id.id=core_form_layout.core_form_settings_id");

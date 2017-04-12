@@ -7,7 +7,7 @@ class SendSms
     protected $_smsSettings=array();
     function __construct() 
     {
-        $smsSettings=CoreClass::getModel("core_sms_settings");
+        $smsSettings=\CoreClass::getModel("core_sms_settings");
         $smsSettings->addCustomFilter("active_status='1'");
         $smsSettings->getCollection();
                 
@@ -45,7 +45,7 @@ class SendSms
             $nodeSave->setData("text",$this->_message);
             $nodeSave->save();
 	    
-            $curl=new Core_CurlCall();
+            $curl=new \Core\CurlCall();
             $curl->setUrl($this->_smsSettings['gateway']);
             $curl->setReturnTransfer(true);
             $curl->setPostData("user", $this->_smsSettings['username']);

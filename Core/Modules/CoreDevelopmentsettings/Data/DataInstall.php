@@ -86,7 +86,8 @@ class DataInstall
             "CoreNodeAttributeOption"=>"CoreNodeAttributeOption",
             "CoreNodeAttributeOptionList"=>"CoreNodeAttributeOptionList",
             "CoreNodeAttributeOptionValue"=>"CoreNodeAttributeOptionValue",
-            
+            "CoreWeekDetails"=>"CoreWeekDetails",
+            "CoreAddressType"=>"CoreAddressType",
         );
         foreach ($nodesArray as $node) 
         {

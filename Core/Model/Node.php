@@ -5,7 +5,7 @@ class Node extends RameshAbstract {
 
     public $_record = array();
     public $_jsonrecord = array();
-    public $_defaulthideAttributes = array("id", "createdby", "updatedby", "updatedat");
+    public $_defaulthideAttributes = array("id","createdat","createdby", "updatedby", "updatedat");
     public $_whereCon = null;
     public $_totalRecordsCount = null;
     public $_rpp = null;
@@ -375,8 +375,15 @@ class Node extends RameshAbstract {
                 }
             }
         }
+        if(\Core::countArray($this->_joinList)>0)
+        {
+                foreach($this->_joinList as $joinData)
+                {
+                        $db->addJoin($joinData['colname'], $joinData['nodeTable'], $joinData['fieldName'], $joinData['con']);
+                }
+        }
         $db->addWhere($this->_whereCon);
-        $db->buildSelect();
+        $db->buildSelect();       
         $this->_totalRecordsCount = $db->getValue();
     }
 
@@ -588,7 +595,7 @@ class Node extends RameshAbstract {
             foreach ($dependencyDetails as $parentColName => $dependentData) {
                 $attributelist = \Core::convertStringToArray($dependentData, "|");
                 foreach ($attributelist as $childColName) {
-                    if ($FilterDependency[$childColName]) {
+                    if (\Core::getValueFromArray($FilterDependency, $childColName)) {
                         $FilterDependency[$childColName] = $FilterDependency[$childColName] . "|" . $parentColName;
                     } else {
                         $FilterDependency[$childColName] = $parentColName;
@@ -710,6 +717,15 @@ class Node extends RameshAbstract {
         $this->getCollection();
         return $this->getRecord();
     }
-
+	public function getResultValue()
+	{		
+		$this->getCollection();
+		if (Core::countArray($this->_collections) > 0) {
+            foreach ($this->_collections as $collection) {
+				$this->_record=$collection;
+            }
+        } 
+		return Core::getValueFromArray(Core::getValuesFromArray($this->_record),0);
+	}
 }
 ?>

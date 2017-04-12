@@ -1,5 +1,4 @@
 <?php
-
 class Core {
 
     static function checkMode() {
@@ -45,56 +44,58 @@ class Core {
     static function createFolder($folderName, $type = null) {
         global $rootObj;
         $wp = $rootObj;
-
+        if ($folderName) {
+            $folderName = str_replace($wp->documentRoot, "", $folderName);
+        }
         $tempPath = "";
         switch ($type) {
             case "C" :
                 if ($folderName) {
-                    $folderName = "Var/" . $wp->identity . "/Cache/" . $folderName;
+                    $folderName = "Var".DIRECTORY_SEPARATOR . $wp->identity .DIRECTORY_SEPARATOR. "Cache".DIRECTORY_SEPARATOR . $folderName;
                 } else {
-                    $folderName = "Var/" . $wp->identity . "/Cache";
+                    $folderName = "Var".DIRECTORY_SEPARATOR . $wp->identity . DIRECTORY_SEPARATOR. "Cache";
                 }
                 break;
             case "E" :
-                $folderName = "Var/" . $wp->identity . "/Errors";
+                $folderName = "Var".DIRECTORY_SEPARATOR . $wp->identity . DIRECTORY_SEPARATOR. "Errors";
                 break;
             case "L" :
-                $folderName = "Var/" . $wp->identity . "/Logs";
+                $folderName = "Var".DIRECTORY_SEPARATOR . $wp->identity . DIRECTORY_SEPARATOR. "Logs";
                 break;
             case "U" :
                 if ($folderName) {
-                    $folderName = "uploads/" . $wp->identity . "/" . $folderName;
+                    $folderName = "uploads".DIRECTORY_SEPARATOR . $wp->identity . DIRECTORY_SEPARATOR . $folderName;
                 } else {
-                    $folderName = "uploads/" . $wp->identity;
+                    $folderName = "uploads".DIRECTORY_SEPARATOR . $wp->identity;
                 }
                 break;
             case "B" :
                 if ($folderName) {
-                    $folderName = "backup/" . $wp->identity . "/" . $folderName;
+                    $folderName = "backup".DIRECTORY_SEPARATOR . $wp->identity . DIRECTORY_SEPARATOR . $folderName;
                 } else {
-                    $folderName = "backup/" . $wp->identity;
+                    $folderName = "backup".DIRECTORY_SEPARATOR . $wp->identity;
                 }
                 break;
             case "R" :
                 if ($folderName) {
-                    $folderName = "Var/" . $wp->identity . "/Reports" . "/" . $folderName;
+                    $folderName = "Var".DIRECTORY_SEPARATOR . $wp->identity .DIRECTORY_SEPARATOR. "Reports" . DIRECTORY_SEPARATOR . $folderName;
                 } else {
-                    $folderName = "Var/" . $wp->identity . "/Reports";
+                    $folderName = "Var".DIRECTORY_SEPARATOR . $wp->identity . DIRECTORY_SEPARATOR. "Reports";
                 }
                 break;
             default :
                 break;
         }
         $tempFolder = $wp->documentRoot;
-        if ($folderName) {
-            $tempPath_list = explode("/", $folderName);
+        if ($folderName) {            
+            $tempPath_list = explode(DIRECTORY_SEPARATOR, $folderName);            
             $i = 0;
             while ($i < count($tempPath_list)) {
                 $tempFolder.=$tempPath_list[$i];
                 if (!file_exists($tempFolder)) {
                     mkdir($tempFolder, 0755, true);
                 }
-                $tempFolder.="/";
+                $tempFolder.=DIRECTORY_SEPARATOR;
                 $i++;
             }
         }
@@ -113,7 +114,7 @@ class Core {
         global $rootObj;
         $cc = new \CoreClass();
         $wp = $rootObj;
-        $fileName = "Var/" . $wp->identity . "/Cache/";
+        $fileName = "Var".DIRECTORY_SEPARATOR . $wp->identity . DIRECTORY_SEPARATOR. "Cache".DIRECTORY_SEPARATOR;
         if (!\Core::fileExists($fileName)) {
             $ch = $cc->getObject("\Core\Cache\Refresh");
             $ch->refreshCache();
@@ -467,16 +468,23 @@ class Core {
         }
     }
 
-    static function createFile($fileName, $overwrite, $data) {
+    static function createFile($fileName, $overwrite, $data=null) {        
         try {
             if ($overwrite == 1) {
-                $fp = fopen($fileName, "w+");
+                $fp = fopen($fileName, "w+") or die($fileName."<br/>");
             } else {
-                $fp = fopen($fileName, "w");
+                if(\Core::fileExists($fileName))
+                {
+                    $fp = fopen($fileName, "a") or die($fileName."<br/>");
+                }
+                else
+                {
+                    $fp = fopen($fileName, "w") or die($fileName."<br/>");
+                }
             }
             fwrite($fp, $data);
             fclose($fp);
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             \Core::Log($ex->getMessage(), "fileexception.log");
         }
     }
@@ -564,8 +572,9 @@ class Core {
 
     static function joinXML($files, $targetPath = null) {
         $xmlstr = '<config>';  // You may wish to change this 
-        foreach ($files as $file)
+        foreach ($files as $file) {
             $xmlstr = \Core::combineXML($file, $xmlstr);
+        }
 
         $xmlstr .= '</config>';
         $xml = simplexml_load_string($xmlstr);
@@ -576,8 +585,9 @@ class Core {
         if (file_exists($file)) {
             $xml = simplexml_load_file($file);
 
-            foreach ($xml as $element)
+            foreach ($xml as $element) {
                 $xmlstr .= $element->asXML();
+            }
         }
         return $xmlstr;
     }
@@ -619,6 +629,54 @@ class Core {
     public static function getStringLength($string) {
         $length = strlen($string);
         return $length;
+    }
+
+    public static function copyFile($source, $destination) {
+        $status = false;
+        if (self::fileExists($source)) {
+            $explode = explode("/", $destination);
+            $fileName = $explode[count($explode) - 1];
+            unset($explode[count($explode) - 1]);
+            $directory = implode("/", $explode);
+            $directoryPath = self::createFolder($directory);
+            $destination = $directoryPath . $fileName;
+            copy($source, $destination);
+        }
+        return $status;
+    }
+
+    static function getTempAdminThemePath() {
+        global $rootObj;
+        $wp = $rootObj;
+        $folderName = $wp->documentRoot . "Var".DIRECTORY_SEPARATOR . $wp->identity .DIRECTORY_SEPARATOR. "design".DIRECTORY_SEPARATOR."adminhtml".DIRECTORY_SEPARATOR . $wp->themeName.DIRECTORY_SEPARATOR;
+        return $folderName;
+    }
+    
+    static function getTempFrontendThemePath(){
+        global $rootObj;
+        $wp = $rootObj;
+        $folderName = $wp->documentRoot . "Var".DIRECTORY_SEPARATOR. $wp->identity .DIRECTORY_SEPARATOR. "design".DIRECTORY_SEPARATOR."frontend".DIRECTORY_SEPARATOR . $wp->themeName.DIRECTORY_SEPARATOR;
+        return $folderName;
+    }
+    static function getTempAdminThemeUrl() {
+        global $rootObj;
+        $wp = $rootObj;
+        $folderName = $wp->websiteUrl . "Var/" . $wp->identity . "/design/adminhtml/" . $wp->themeName."/";
+        return $folderName;
+    }
+    
+    static function getTempFrontendThemeUrl(){
+        global $rootObj;
+        $wp = $rootObj;
+        $folderName = $wp->websiteUrl . "Var/" . $wp->identity . "/design/frontend/" . $wp->themeName."/";
+        return $folderName;
+    }
+    static function deleteFile($filepath)
+    {
+        if(\Core::fileExists($filepath))
+        {
+            unlink($filepath);
+        }
     }
 
 }

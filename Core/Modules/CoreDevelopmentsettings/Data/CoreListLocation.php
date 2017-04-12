@@ -69,6 +69,33 @@ class CoreListLocation
             $registerController->setIsArchive("");  
             $registerController->dataSave();
             
+            $relationController=  \CoreClass::getController("core_node_relations","core_developmentsettings");
+            $relationController->setCoreNodeSettingsId("core_list_location");
+            $relationController->setCoreNodeColname("core_country_id");
+            $relationController->setCoreRelationTypeId("MTO");
+            $relationController->setCoreNodeParent("core_country");
+            $relationController->setSortValue("1");
+            $relationController->dataSave();
+            
+            $relationController=  \CoreClass::getController("core_node_relations","core_developmentsettings");
+            $relationController->setCoreNodeSettingsId("core_list_location");
+            $relationController->setCoreNodeColname("core_list_state_id");
+            $relationController->setCoreRelationTypeId("MTO");
+            $relationController->setCoreNodeParent("core_list_state");
+            $relationController->setDependeeFields("core_country");
+            $relationController->setSortValue("2");
+            $relationController->dataSave();
+            
+            $relationController=  \CoreClass::getController("core_node_relations","core_developmentsettings");
+            $relationController->setCoreNodeSettingsId("core_list_location");
+            $relationController->setCoreNodeColname("core_list_city_id");
+            $relationController->setCoreRelationTypeId("MTO");
+            $relationController->setCoreNodeParent("core_list_city");
+            $relationController->setDependeeFields("core_list_state");
+            $relationController->setSortValue("3");
+            $relationController->dataSave();
+            
+            
         }
         catch (Exception $ex)
         {

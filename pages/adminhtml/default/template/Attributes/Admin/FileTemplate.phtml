@@ -5,7 +5,7 @@ if ($this->_Value) {
     if ($this->_filePath) {
         $fileName.=$this->_filePath . "/";
     }
-    $fileName.=$this->_Value;
+    $fileName.= $this->_Value;
     if (Core::is_image($fileName)) {
 
         $output = "<div class='image_display'><img src='" . $fileName . "' /></div>";

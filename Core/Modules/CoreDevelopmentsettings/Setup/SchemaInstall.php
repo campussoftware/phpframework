@@ -109,6 +109,8 @@ class SchemaInstall
             "CoreListLocation"=>"CoreListLocation",
             "CoreListState"=>"CoreListState",
             "CorePaymentType"=>"CorePaymentType",
+            "CoreWeekDetails"=>"CoreWeekDetails",
+            "CoreAddressType"=>"CoreAddressType",
             
         );
         foreach ($nodesArray as $node) 
